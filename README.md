@@ -16,11 +16,21 @@ CediNook is a Progressive Web App. Deploy this folder to an HTTPS host, then:
 
 A ZIP opened directly from disk (`file://`) can be used in a browser but cannot be installed as an app.
 
-## Run locally
-1. Install Node.js 20 or later.
-2. `npm install`
-3. `npm start`
-4. Open `http://localhost:3000`
+## Run locally on Windows
+1. Extract this ZIP. **Open the extracted folder that directly contains `index.html`, `package.json`, and `server.js`** — do not select the ZIP itself or its parent folder.
+2. Install Node.js 20 or later.
+3. Double-click `TEST_LOCAL.bat` (or open Command Prompt in this folder and run `npm install` followed by `npm start`).
+4. Open `http://localhost:3000`.
+
+The website entry file is `index.html` in this folder. The Node server serves it at `/` and serves the app assets from the same folder.
+
+## Deploy to Render
+1. Upload the **contents of this folder** to the top level of your GitHub repository. `index.html`, `package.json`, `server.js`, and `render.yaml` must all be visible at the repository root.
+2. In Render, create a Blueprint from that repository and select `render.yaml`.
+3. Render uses `npm install` to build and `npm start` to launch the app. The blueprint includes a PostgreSQL database and generates the encryption key.
+4. After deployment, open the service URL. Check `/api/health` if you need to confirm the server is running.
+
+If you deploy as a static site instead of using the included Node web service, the API-backed account and sync endpoints will not work. Use the included Render Blueprint for the complete app.
 
 ## Tests
 `npm test`

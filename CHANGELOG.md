@@ -23,3 +23,10 @@
 - Reworked the workspace around a forest-green navigation rail, calmer page background, sticky header and consistent white content cards.
 - Refined dashboard hierarchy, summary cards, forms, action buttons and responsive spacing across finance pages.
 
+
+
+## PWA installation repair
+- Strengthened Web App Manifest and mobile/Apple install metadata.
+- Added a dedicated 180×180 Apple touch icon.
+- Fixed native install prompt invocation and added browser-specific installation guidance for mobile and desktop.
+- Bumped service-worker cache to refresh previously installed copies.

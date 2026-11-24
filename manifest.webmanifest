@@ -1,6 +1,6 @@
 {
   "id": "./",
-  "name": "CediNook \u2014 Personal Finance & Savings Tracker",
+  "name": "CediNook — Personal Finance & Savings Tracker",
   "short_name": "CediNook",
   "description": "Installable offline-first personal finance and savings tracker. All transactions and amounts are entered manually by you.",
   "start_url": "./",
@@ -8,9 +8,10 @@
   "display": "standalone",
   "display_override": [
     "standalone",
-    "minimal-ui"
+    "minimal-ui",
+    "browser"
   ],
-  "orientation": "portrait-primary",
+  "orientation": "any",
   "background_color": "#f4f8ff",
   "theme_color": "#1d4ed8",
   "categories": [

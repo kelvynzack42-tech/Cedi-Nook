@@ -12,7 +12,7 @@
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" type="image/svg+xml" href="./icons/favicon.svg">
 <link rel="icon" type="image/png" sizes="192x192" href="./icons/cedinook-192.png">
-<link rel="apple-touch-icon" href="./icons/cedinook-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png">
 <title>CediNook — Personal Finance & Savings Tracker</title>
 <style>
 :root{--green:#2457c5;--green2:#2563eb;--mint:#eff6ff;--mint2:#ffffff;--ink:#dde7f5;--muted:#65738c;--line:#dce5f5;--bg:#ffffff;--white:#ffffff;--red:#bf3f48;--amber:#a76512;--shadow:0 8px 28px rgba(220,231,245,0.06)}
@@ -403,6 +403,12 @@ header.st-topbar{margin-left:290px;max-width:none;padding:18px 30px;background:t
 @media(max-width:390px){.st-hero h2{font-size:24px}.st-hero{height:235px}.st-quick-grid{gap:8px}.st-quick-grid button span{font-size:11px}.stats{grid-template-columns:1fr 1fr}}
 </style>
 
+<style id="cedinook-install-ui">
+/* CediNook install UI */
+.install-help{display:block;max-width:290px;font-size:11px;line-height:1.35;color:#315b9d}
+#installAppBtn{white-space:nowrap}
+@media(max-width:760px){.install-help{position:fixed;right:12px;top:68px;z-index:1000;max-width:min(75vw,320px);padding:7px 10px;border-radius:9px;background:#fff;box-shadow:0 4px 16px #173b3020}}
+</style>
 </head>
 <body>
 
@@ -440,7 +446,7 @@ header.st-topbar{margin-left:290px;max-width:none;padding:18px 30px;background:t
 <header class="st-topbar">
  <button class="st-menu-btn" id="stMenuBtn" type="button" aria-label="Open menu" aria-controls="stSidebar" aria-expanded="false">☰</button>
  <div class="brand"><div class="logo"><img src="./icons/cedinook-mark.png" alt="CediNook logo"></div><div><h1>CediNook</h1><p>Understand your money. Manage every day.</p></div></div>
- <div class="st-search"><span>⌕</span><input type="search" id="stGlobalSearch" placeholder="Search anything…" aria-label="Search CediNook"></div><div class="header-right"><span class="online-pill">● Offline mode · Private local data</span><button class="header-btn" id="installAppBtn" type="button">＋ Install app</button><button class="header-btn" id="lockNowBtn" type="button">Lock now</button></div>
+ <div class="st-search"><span>⌕</span><input type="search" id="stGlobalSearch" placeholder="Search anything…" aria-label="Search CediNook"></div><div class="header-right"><span class="online-pill">● Offline mode · Private local data</span><button class="header-btn" id="installAppBtn" type="button">＋ Install app</button><span id="installHelp" class="install-help" role="status" aria-live="polite"></span><button class="header-btn" id="lockNowBtn" type="button">Lock now</button></div>
 </header>
 <main id="appMain">
  <div id="dashboardOverview" class="dashboard-overview-page">
@@ -1033,7 +1039,13 @@ function checkReminder(){const s=data.settings,f=s.reminderFrequency;if(!f||f===
  }
 },300)}}
  $('exportBtn').onclick=$('exportSettingsBtn').onclick=()=>{const blob=new Blob([JSON.stringify({...data,app:'CediNook',exportedAt:new Date().toISOString()},null,2)],{type:'application/json'});downloadBlob(blob,`valvitrack-backup-${today()}.json`);data.settings.lastBackup=Date.now();persist();if($('backupStatus'))$('backupStatus').textContent='Last JSON backup created '+new Date(data.settings.lastBackup).toLocaleString()};
-function savePdfBackup(){const goals=data.goals,tx=allTx();const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const goalRows=goals.map(g=>`<tr><td>${esc(g.name)}</td><td>${esc(g.currency)}</td><td>${esc(money(Math.max(0,saved(g)),g.currency))}</td><td>${esc(money(g.target,g.currency))}</td><td>${Math.max(0,Math.min(100,Math.round(saved(g)/Number(g.target)*100)))}%</td><td>${esc(g.deadline||'—')}</td></tr>`).join('');const txRows=tx.map(t=>`<tr><td>${esc(t.date)}</td><td>${esc(t.goalName)}</td><td>${esc(t.type)}</td><td>${esc(money(t.amount,t.currency))}</td><td>${esc(t.note||'')}</td></tr>`).join('');const w=window.open('','_blank');if(!w){alert('Your browser blocked the PDF print window. Allow pop-ups for CediNook and try again.');return}w.document.write(`<!doctype html><html><head><title>CediNook PDF Backup ${today()}</title><meta charset="utf-8"><style>body{font:12px Arial,sans-serif;color:#0f1a2d;padding:24px}h1{color:#17366b;margin-bottom:4px}h2{margin-top:26px;color:#17366b}p{color:#52658a}table{width:100%;border-collapse:collapse;margin-top:12px}th,td{border:1px solid #dce5f5;padding:7px;text-align:left;overflow-wrap:anywhere}th{background:#ffffff}small{color:#4b6590}.notice{padding:10px;background:#eff6ff;border:1px solid #cfe0fb;margin-top:16px}@media print{button{display:none}}</style></head><body><h1>CediNook — Personal Finance Backup</h1><p>Generated ${esc(new Date().toLocaleString())} · Offline savings report</p><p><b>Important:</b> This PDF is a readable archive for printing and safekeeping. To restore data inside CediNook, also keep the JSON backup.</p><h2>Savings goals</h2><table><thead><tr><th>Goal</th><th>Currency</th><th>Current saved</th><th>Target</th><th>Progress</th><th>Deadline</th></tr></thead><tbody>${goalRows||'<tr><td colspan="6">No goals saved.</td></tr>'}</tbody></table><h2>Transactions (${tx.length})</h2><table><thead><tr><th>Date</th><th>Goal</th><th>Type</th><th>Amount</th><th>Note</th></tr></thead><tbody>${txRows||'<tr><td colspan="5">No transactions recorded.</td></tr>'}</tbody></table><h2>Preferences</h2><p>Reminder frequency: ${esc(data.settings.reminderFrequency||'off')} · Reminder time: ${esc(data.settings.reminderTime||'18:00')} · PIN lock: ${data.settings.pinHash?'Enabled (PIN not included)':'Disabled'}</p><div class="notice">Privacy note: This report may contain personal financial details. Store it somewhere private.</div><p><small>CediNook does not move or hold money. Balances are based on transactions entered by the user.</small></p><script>window.onload=()=>setTimeout(()=>window.print(),250)<\/script>
+function savePdfBackup(){const goals=data.goals,tx=allTx();const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const goalRows=goals.map(g=>`<tr><td>${esc(g.name)}</td><td>${esc(g.currency)}</td><td>${esc(money(Math.max(0,saved(g)),g.currency))}</td><td>${esc(money(g.target,g.currency))}</td><td>${Math.max(0,Math.min(100,Math.round(saved(g)/Number(g.target)*100)))}%</td><td>${esc(g.deadline||'—')}</td></tr>`).join('');const txRows=tx.map(t=>`<tr><td>${esc(t.date)}</td><td>${esc(t.goalName)}</td><td>${esc(t.type)}</td><td>${esc(money(t.amount,t.currency))}</td><td>${esc(t.note||'')}</td></tr>`).join('');const w=window.open('','_blank');if(!w){alert('Your browser blocked the PDF print window. Allow pop-ups for CediNook and try again.');return}w.document.write(`<!doctype html><html><head><title>CediNook PDF Backup ${today()}</title><meta charset="utf-8"><style>body{font:12px Arial,sans-serif;color:#0f1a2d;padding:24px}h1{color:#17366b;margin-bottom:4px}h2{margin-top:26px;color:#17366b}p{color:#52658a}table{width:100%;border-collapse:collapse;margin-top:12px}th,td{border:1px solid #dce5f5;padding:7px;text-align:left;overflow-wrap:anywhere}th{background:#ffffff}small{color:#4b6590}.notice{padding:10px;background:#eff6ff;border:1px solid #cfe0fb;margin-top:16px}@media print{button{display:none}}</style><style id="cedinook-install-ui">
+/* CediNook install UI */
+.install-help{display:block;max-width:290px;font-size:11px;line-height:1.35;color:#315b9d}
+#installAppBtn{white-space:nowrap}
+@media(max-width:760px){.install-help{position:fixed;right:12px;top:68px;z-index:1000;max-width:min(75vw,320px);padding:7px 10px;border-radius:9px;background:#fff;box-shadow:0 4px 16px #173b3020}}
+</style>
+</head><body><h1>CediNook — Personal Finance Backup</h1><p>Generated ${esc(new Date().toLocaleString())} · Offline savings report</p><p><b>Important:</b> This PDF is a readable archive for printing and safekeeping. To restore data inside CediNook, also keep the JSON backup.</p><h2>Savings goals</h2><table><thead><tr><th>Goal</th><th>Currency</th><th>Current saved</th><th>Target</th><th>Progress</th><th>Deadline</th></tr></thead><tbody>${goalRows||'<tr><td colspan="6">No goals saved.</td></tr>'}</tbody></table><h2>Transactions (${tx.length})</h2><table><thead><tr><th>Date</th><th>Goal</th><th>Type</th><th>Amount</th><th>Note</th></tr></thead><tbody>${txRows||'<tr><td colspan="5">No transactions recorded.</td></tr>'}</tbody></table><h2>Preferences</h2><p>Reminder frequency: ${esc(data.settings.reminderFrequency||'off')} · Reminder time: ${esc(data.settings.reminderTime||'18:00')} · PIN lock: ${data.settings.pinHash?'Enabled (PIN not included)':'Disabled'}</p><div class="notice">Privacy note: This report may contain personal financial details. Store it somewhere private.</div><p><small>CediNook does not move or hold money. Balances are based on transactions entered by the user.</small></p><script>window.onload=()=>setTimeout(()=>window.print(),250)<\/script>
 <style id="cedinook-layout-refresh">
 :root{--green:#176b52;--green2:#0f4f3d;--mint:#e8f4ed;--mint2:#f1f7f2;--ink:#172b24;--muted:#64766d;--line:#e1e9e3;--bg:#f5f8f5;--white:#fff;--red:#b44c48;--amber:#8d611c;--shadow:0 8px 28px rgba(30,56,43,.055);--surface-soft:#f7faf7}
 html,body{background:#f5f8f5!important;color:#172b24!important}body{background:radial-gradient(ellipse at 88% 0%,#e9f3eb 0,transparent 32%),#f5f8f5!important;color:#172b24!important}
@@ -1239,48 +1251,66 @@ render();renderMoney();renderBankCenter();renderFinancialPlan();renderHealthCent
 })();
 </script>
 <script>
-// Installable phone app (PWA). Installation requires HTTPS, except localhost.
-let valviTrackInstallPrompt = null;
+// CediNook install support. Native install prompts are browser-controlled and require HTTPS.
+let cediNookInstallPrompt = null;
 const installButtons = () => [document.getElementById('installAppBtn'), document.getElementById('accountInstallBtn')].filter(Boolean);
 function setInstallHelp(message) {
   const node = document.getElementById('installHelp');
   if (node) node.textContent = message;
 }
+function isCediNookInstalled() {
+  return window.matchMedia?.('(display-mode: standalone)').matches ||
+    window.matchMedia?.('(display-mode: minimal-ui)').matches ||
+    window.navigator.standalone === true;
+}
 function refreshInstallButtons() {
-  const installed = window.matchMedia?.('(display-mode: standalone)').matches || window.navigator.standalone === true;
-  installButtons().forEach(button => { button.hidden = !!installed; });
+  installButtons().forEach(button => { button.hidden = isCediNookInstalled(); });
 }
 window.addEventListener('beforeinstallprompt', event => {
   event.preventDefault();
-  valviTrackInstallPrompt = event;
+  cediNookInstallPrompt = event;
   refreshInstallButtons();
+  setInstallHelp('Ready to install.');
 });
 window.addEventListener('appinstalled', () => {
-  valviTrackInstallPrompt = null;
+  cediNookInstallPrompt = null;
   refreshInstallButtons();
-  setInstallHelp('CediNook is installed on your phone.');
+  setInstallHelp('CediNook has been installed.');
 });
-async function installValviTrack() {
-  if (valviTrackInstallPrompt) {
-    valviTrackInstallPrompt.prompt();
-    const choice = await valviTrackInstallPrompt.userChoice;
-    setInstallHelp(choice.outcome === 'accepted' ? 'CediNook installation started.' : 'Installation was cancelled. You can install it later from your browser menu.');
-    valviTrackInstallPrompt = null;
+async function installCediNook() {
+  if (cediNookInstallPrompt) {
+    try {
+      await cediNookInstallPrompt.prompt();
+      const choice = await cediNookInstallPrompt.userChoice;
+      setInstallHelp(choice.outcome === 'accepted'
+        ? 'Installation accepted. Find CediNook on your home screen or app launcher.'
+        : 'Installation was cancelled. You can install it later from the browser menu.');
+    } catch (error) {
+      setInstallHelp('Use your browser menu and choose Install app or Create shortcut.');
+    } finally {
+      cediNookInstallPrompt = null;
+    }
     return;
   }
   const ua = navigator.userAgent || '';
   if (/iphone|ipad|ipod/i.test(ua)) {
-    setInstallHelp('On iPhone: open this page in Safari, tap Share, choose “Add to Home Screen”, then tap Add.');
+    setInstallHelp('iPhone/iPad: open in Safari → Share → Add to Home Screen → Add.');
   } else if (/android/i.test(ua)) {
-    setInstallHelp('On Android: open this site in Chrome, tap ⋮, then choose “Install app” or “Add to Home screen”.');
+    setInstallHelp('Android: open in Chrome → ⋮ → Install app (or Add to Home screen).');
+  } else if (/edg\//i.test(ua)) {
+    setInstallHelp('Desktop Edge: select ⋯ → Apps → Install this site as an app.');
+  } else if (/chrome|chromium/i.test(ua)) {
+    setInstallHelp('Desktop Chrome: select the install icon in the address bar, or ⋮ → Cast, save and share → Install page as app.');
   } else {
-    setInstallHelp('Open CediNook on your phone using Chrome (Android) or Safari (iPhone), then use the browser menu to install or add it to your Home Screen.');
+    setInstallHelp('Use your browser menu: choose Install app, Create shortcut, or Add to Home Screen. HTTPS is required.');
   }
 }
-installButtons().forEach(button => button.addEventListener('click', installValviTrack));
+installButtons().forEach(button => button.addEventListener('click', installCediNook));
 refreshInstallButtons();
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js').catch(err => console.warn('CediNook offline setup unavailable:', err)));
+  window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js', { scope: './' })
+    .then(() => console.info('CediNook offline app ready'))
+    .catch(err => console.warn('CediNook offline setup unavailable:', err)));
 }
 </script>
 

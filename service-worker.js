@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cedinook-v2';
+const CACHE_NAME = 'cedinook-v3';
 const APP_SHELL = [
   './',
   './index.html',
@@ -6,6 +6,7 @@ const APP_SHELL = [
   './icons/favicon.svg',
   './icons/cedinook.svg',
   './icons/cedinook-192.png',
+  './icons/apple-touch-icon.png',
   './icons/cedinook-512.png',
   './icons/cedinook-maskable-512.png',
   './icons/cedinook-mark.png',
