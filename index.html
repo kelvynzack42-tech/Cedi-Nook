@@ -409,6 +409,19 @@ header.st-topbar{margin-left:290px;max-width:none;padding:18px 30px;background:t
 #installAppBtn{white-space:nowrap}
 @media(max-width:760px){.install-help{position:fixed;right:12px;top:68px;z-index:1000;max-width:min(75vw,320px);padding:7px 10px;border-radius:9px;background:#fff;box-shadow:0 4px 16px #173b3020}}
 </style>
+
+<style id="cedinook-v2-simplified">
+.dashboard-tools{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 14px}.dashboard-tools .small-note{padding:8px 12px;border-radius:10px}
+#dashboardOverview .st-hero,#dashboardOverview .st-insights,#dashboardOverview .st-lower-grid{display:none!important}
+#dashboardOverview .st-overview-row{margin-top:8px}
+#dashboardOverview>.stats{display:grid!important;margin-top:16px}
+.dashboard-private #dashboardOverview .st-overview-card b,.dashboard-private #dashboardOverview .stat-value{filter:blur(8px);user-select:none}
+.dashboard-private #dashboardOverview .st-overview-card b::selection,.dashboard-private #dashboardOverview .stat-value::selection{background:transparent}
+#notificationCenterBtn{white-space:nowrap;min-width:48px}#notificationCount{display:inline-grid;place-items:center;min-width:18px;height:18px;border-radius:20px;background:#e7b94d;color:#172b24;font-size:10px;font-weight:800;padding:0 4px}
+#view-salary .stats{margin:14px 0;grid-template-columns:repeat(2,minmax(0,1fr))}#view-salary .columns{align-items:start}
+@media(max-width:720px){.dashboard-tools{align-items:flex-start;flex-wrap:wrap}#dashboardOverview>.stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}#notificationCenterBtn{padding:9px}}
+</style>
+
 </head>
 <body>
 
@@ -437,7 +450,7 @@ header.st-topbar{margin-left:290px;max-width:none;padding:18px 30px;background:t
  <div class="st-brand"><div class="st-logo"><img src="./icons/cedinook-mark.png" alt="CediNook logo"></div><div><b>CediNook</b><small>Save · Plan · Achieve</small></div></div>
  <div class="st-side-label">WORKSPACE</div>
  <nav class="nav" aria-label="Main navigation">
-  <button class="active" data-view="money">▦ <span>Daily Finance</span></button><button data-view="health">♥ <span>Financial Health</span></button><button data-view="dashboard">◷ <span>Savings Goals</span></button><button data-view="reports">▥ <span>Savings & Finance Reports</span></button><button data-view="coach">✦ <span>Savings Coach</span></button><button data-view="planner">▣ <span>Savings Planner</span></button><button data-view="financial">⌁ <span>Money Plan</span></button><button data-view="settings">⚙ <span>Settings</span></button>
+  <button class="active" data-view="home">▦ <span>Dashboard</span></button><button data-view="money">▤ <span>Daily Finance</span></button><button data-view="salary">＄ <span>Salary & Income</span></button><button data-view="health">♥ <span>Financial Health</span></button><button data-view="dashboard">◷ <span>Savings Goals</span></button><button data-view="financial">⌁ <span>Spending & Budget</span></button><button data-view="reports">▥ <span>Reports & History</span></button><button data-view="coach">✦ <span>Savings Coach</span></button><button data-view="planner">▣ <span>Savings Planner</span></button><button data-view="settings">⚙ <span>Settings</span></button>
  </nav>
  <button class="st-collapse" id="stCollapseBtn" type="button" aria-pressed="false" title="Collapse menu"><b>«</b><em>Collapse menu</em></button>
  <div class="st-safe"><span>◈</span><div><b>Your data is safe</b><small>Secure & private</small></div></div>
@@ -446,7 +459,7 @@ header.st-topbar{margin-left:290px;max-width:none;padding:18px 30px;background:t
 <header class="st-topbar">
  <button class="st-menu-btn" id="stMenuBtn" type="button" aria-label="Open menu" aria-controls="stSidebar" aria-expanded="false">☰</button>
  <div class="brand"><div class="logo"><img src="./icons/cedinook-mark.png" alt="CediNook logo"></div><div><h1>CediNook</h1><p>Understand your money. Manage every day.</p></div></div>
- <div class="st-search"><span>⌕</span><input type="search" id="stGlobalSearch" placeholder="Search anything…" aria-label="Search CediNook"></div><div class="header-right"><span class="online-pill">● Offline mode · Private local data</span><button class="header-btn" id="installAppBtn" type="button">＋ Install app</button><span id="installHelp" class="install-help" role="status" aria-live="polite"></span><button class="header-btn" id="lockNowBtn" type="button">Lock now</button></div>
+ <div class="st-search"><span>⌕</span><input type="search" id="stGlobalSearch" placeholder="Search anything…" aria-label="Search CediNook"></div><div class="header-right"><button class="header-btn" id="notificationCenterBtn" type="button" aria-label="Notifications and reminders">🔔 <span id="notificationCount">0</span></button><span class="online-pill">● Offline mode · Private local data</span><button class="header-btn" id="installAppBtn" type="button">＋ Install app</button><span id="installHelp" class="install-help" role="status" aria-live="polite"></span><button class="header-btn" id="lockNowBtn" type="button">Lock now</button></div>
 </header>
 <main id="appMain">
  <div id="dashboardOverview" class="dashboard-overview-page">
@@ -454,7 +467,7 @@ header.st-topbar{margin-left:290px;max-width:none;padding:18px 30px;background:t
   <div class="st-hero-copy"><div class="st-welcome-pill" id="welcomePill">👋 Welcome!</div><h2 id="greeting">Take Control of Your <em>Finance</em></h2><p>Save more, spend wisely, and achieve your goals.</p><button class="st-hero-btn" type="button" data-go-view="dashboard">Set a Savings Goal <span>→</span></button></div>
   <div class="st-hero-art" aria-hidden="true"></div>
  </section>
- <div class="st-overview-row">
+ <div class="dashboard-tools"><button type="button" class="header-btn" id="toggleDashboardPrivacy" aria-pressed="false">◉ Hide amounts</button><span class="small-note">Your private financial snapshot</span></div><div class="st-overview-row">
   <div class="st-overview-card st-card-green"><div class="st-orb">▣</div><div><span>Total Savings</span><b id="stTotalSavings">GH₵0.00</b><small>Across your accounts</small></div><div class="st-spark">⌁</div></div>
   <div class="st-overview-card st-card-purple"><div class="st-orb">▥</div><div><span>This Month</span><b id="stThisMonth">GH₵0.00</b><small>Income recorded</small></div><div class="st-spark">⌁</div></div>
   <div class="st-overview-card st-card-gold"><div class="st-orb">◎</div><div><span>Your Goal</span><b id="stGoalTarget">GH₵0.00</b><div class="st-progress"><i id="stGoalProgress"></i></div></div><strong id="stGoalPct">0%</strong></div>
@@ -590,6 +603,11 @@ header.st-topbar{margin-left:290px;max-width:none;padding:18px 30px;background:t
   </section>
 
    <section class="panel" style="margin-top:16px"><div class="section-head"><h3>Recurring reminders</h3><span class="muted">Manual confirmation required</span></div><div id="recurringMoneyList" class="reminder-list"></div></section><section class="panel" style="margin-top:16px"><div class="section-head"><h3>Daily transaction history</h3><span class="muted">Income and expenses</span></div><div class="goal-tools"><input id="moneySearch" type="search" placeholder="Search description or category" aria-label="Search transactions"><select id="moneyFilterType" aria-label="Filter transaction type"><option value="all">All entries</option><option value="expense">Expenses</option><option value="income">Income</option></select><select id="moneyFilterMonth" aria-label="Filter transaction month"><option value="all">All months</option></select></div><div id="moneyEntries"></div></section>
+ </section>
+ <section class="view" id="view-salary">
+  <div class="section-head"><div><h3>Salary & income</h3><p class="sub">Record salary payments and other income. Entries also update your dashboard and reports.</p></div><span class="badge">Income centre</span></div>
+  <div class="stats"><div class="stat"><div class="stat-top">Salary this month</div><div class="stat-value" id="salaryMonthTotal">GH₵0.00</div></div><div class="stat"><div class="stat-top">Other income this month</div><div class="stat-value" id="otherIncomeTotal">GH₵0.00</div></div></div>
+  <div class="columns"><section class="panel"><h3>Record salary or income</h3><form id="salaryForm"><label for="salarySource">Income source</label><input id="salarySource" maxlength="70" placeholder="e.g. Monthly salary, freelance work" required><div class="two"><div><label for="salaryAmount">Amount (GHS)</label><input id="salaryAmount" type="number" min=".01" step=".01" required placeholder="0.00"></div><div><label for="salaryDate">Date received</label><input id="salaryDate" type="date" required></div></div><label for="salaryKind">Income type</label><select id="salaryKind"><option value="salary">Salary</option><option value="other">Other income</option><option value="bonus">Bonus / commission</option></select><label for="salaryNote">Note (optional)</label><input id="salaryNote" maxlength="120" placeholder="Payment reference or note"><button class="primary" type="submit">＋ Save income</button></form></section><section class="panel"><h3>Income history</h3><p class="sub">Your latest recorded salary and income payments.</p><div id="salaryHistory" class="reminder-list"></div></section></div>
  </section>
  <section class="view" id="view-financial">
   <div class="section-head"><div><h3>Your monthly money plan</h3><div class="sub" style="margin:4px 0 0">Turn your income into a practical spending, saving and bills plan.</div></div><span class="badge">Financial health</span></div>
@@ -823,7 +841,7 @@ const allTx=()=>data.goals.flatMap(g=>txs(g).map(t=>({...t,goalName:g.name,curre
 let activeAccount=null;
 function localAccounts(){try{return JSON.parse(storage.getItem(AUTH_KEY)||'[]')}catch(_){return []}}
 function setWelcomePill(){const el=$('welcomePill');if(!el)return;let seen=false;try{seen=storage.getItem('valvitrack_seen_v1')==='1';storage.setItem('valvitrack_seen_v1','1')}catch(_){}el.textContent=seen?'👋 Welcome back!':'👋 Welcome to CediNook!';}
-function enterAccount(user){activeAccount=user;storage.setItem(ACTIVE_KEY,user.id);loadAccountData(user.id);$('appMain').style.display='';render();renderMoney();renderBankCenter();renderFinancialPlan();if($('view-health')?.classList.contains('active'))renderHealthCentre();setWelcomePill();}
+function enterAccount(user){activeAccount=user;storage.setItem(ACTIVE_KEY,user.id);loadAccountData(user.id);$('appMain').style.display='';render();renderMoney();renderSalaryCentre();renderBankCenter();renderFinancialPlan();if($('view-health')?.classList.contains('active'))renderHealthCentre();setWelcomePill();}
 (function initProfile(){
  // Re-use any profile that already exists on this device so earlier data is kept.
  const accounts=localAccounts();
@@ -890,7 +908,7 @@ function renderInsights(){
 }
 document.addEventListener('click',e=>{if(e.target.closest('[data-st-backup]')){const b=$('exportBtn');if(b)b.click()}});
 ['exportBtn','exportSettingsBtn'].forEach(id=>{const b=$(id);if(b)b.addEventListener('click',markBackup)});
-function persist(){data.version=8;try{const current=storage.getItem(KEY);if(current){try{JSON.parse(current);storage.setItem(KEY+'_previous',current)}catch(_){}}storage.setItem(KEY,JSON.stringify(data));render();renderMoney();renderBankCenter();renderFinancialPlan();if($('view-health')?.classList.contains('active'))renderHealthCentre();checkReminder();if($('storageStatus'))$('storageStatus').textContent='Saved on this device · '+new Date().toLocaleTimeString();}catch(err){console.error('CediNook storage error:',err);alert('CediNook could not save this change. Your browser storage may be full or unavailable. Export a backup and free some device storage before trying again.');}}
+function persist(){data.version=8;try{const current=storage.getItem(KEY);if(current){try{JSON.parse(current);storage.setItem(KEY+'_previous',current)}catch(_){}}storage.setItem(KEY,JSON.stringify(data));render();renderMoney();renderSalaryCentre();renderBankCenter();renderFinancialPlan();if($('view-health')?.classList.contains('active'))renderHealthCentre();checkReminder();if($('storageStatus'))$('storageStatus').textContent='Saved on this device · '+new Date().toLocaleTimeString();}catch(err){console.error('CediNook storage error:',err);alert('CediNook could not save this change. Your browser storage may be full or unavailable. Export a backup and free some device storage before trying again.');}}
 function pace(g){const left=remaining(g);if(left<=0)return'Target reached — excellent work!';if(!g.deadline)return'Add a target date to calculate a daily, weekly and monthly savings pace.';const now=new Date(today()+'T00:00:00'),end=new Date(g.deadline+'T00:00:00'),days=Math.max(0,Math.ceil((end-now)/86400000));if(days===0)return`Save ${money(left,g.currency)} today to reach your target.`;return`Suggested pace: ${money(left/days,g.currency)}/day · ${money(left/Math.max(1,days/7),g.currency)}/week · ${money(left/Math.max(1,days/30.4375),g.currency)}/month · ${days} days left.`}
 function render(){
   const backupStamp=Number(data.settings.lastBackup||0);if($('backupStatus'))$('backupStatus').textContent=backupStamp?'Last backup recorded '+new Date(backupStamp).toLocaleString():'No backup recorded yet. Create a JSON backup to protect your data.';
@@ -941,16 +959,16 @@ function drawCharts(){
  const a=canvasCtx('monthlyChart');if(a){const {x,w,h}=a;x.clearRect(0,0,w,h);const pad={l:40,r:10,t:12,b:28},pw=w-pad.l-pad.r,ph=h-pad.t-pad.b,now=new Date();let months=[];for(let i=5;i>=0;i--){const d=new Date(now.getFullYear(),now.getMonth()-i,1);months.push(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`)}const vals=months.map(m=>allTx().filter(t=>t.currency==='GHS'&&monthKey(t.date)===m).reduce((s,t)=>s+(t.type==='deposit'?Number(t.amount):-Number(t.amount)),0));const max=Math.max(100,...vals.map(v=>Math.abs(v)));x.strokeStyle='#f0f3fa';x.fillStyle='#4b6590';x.font='10px system-ui';x.lineWidth=1;for(let i=0;i<4;i++){const yy=pad.t+ph*i/3;x.beginPath();x.moveTo(pad.l,yy);x.lineTo(w-pad.r,yy);x.stroke();x.fillText(Math.round(max*(1-i/3)).toString(),2,yy+3)}const step=pw/6,bw=Math.min(24,step*.48);vals.forEach((v,i)=>{const bh=Math.abs(v)/max*(ph-8),xx=pad.l+step*i+(step-bw)/2,yy=pad.t+ph-(v>=0?bh:0);x.fillStyle=v>=0?'#2563eb':'#d95761';x.fillRect(xx,yy,bw,Math.max(2,bh));x.fillStyle='#4b6590';x.fillText(months[i].slice(5),xx-2,h-8)})}
  const b=canvasCtx('goalChart');if(b){const {x,w,h}=b;x.clearRect(0,0,w,h);const gs=data.goals.slice(0,8);if(!gs.length){x.fillStyle='#4b6590';x.font='12px system-ui';x.fillText('Create a goal to see its progress.',8,24);return}const left=8,top=10,labelW=Math.min(125,w*.43),barW=Math.max(30,w-labelW-50),rowH=Math.min(32,(h-15)/gs.length);gs.forEach((g,i)=>{const y=top+i*rowH,p=Math.max(0,Math.min(100,saved(g)/g.target*100));x.fillStyle='#0f2350';x.font='10px system-ui';let name=g.name;if(name.length>17)name=name.slice(0,16)+'…';x.fillText(name,left,y+10);x.fillStyle='#eef2fb';x.fillRect(left+labelW,y,barW,9);x.fillStyle='#2563eb';x.fillRect(left+labelW,y,barW*p/100,9);x.fillStyle='#0f2350';x.fillText(Math.round(p)+'%',left+labelW+barW+5,y+9)})}
 }
-const VALVI_TRACK_PAGES=['money','health','dashboard','reports','coach','planner','financial','settings'];
+const VALVI_TRACK_PAGES=['home','money','salary','health','dashboard','reports','coach','planner','financial','settings'];
 function showView(v,opts={}){
  if(!VALVI_TRACK_PAGES.includes(v))v='money';
  const previous=document.querySelector('.view.active');
  document.querySelectorAll('.nav button').forEach(b=>{b.classList.toggle('active',b.dataset.view===v);b.setAttribute('aria-current',b.dataset.view===v?'page':'false')});
  document.querySelectorAll('.view').forEach(el=>{const active=el.id==='view-'+v;el.classList.toggle('active',active);if(active){el.classList.remove('page-enter');void el.offsetWidth;el.classList.add('page-enter')}});
- const overview=$('dashboardOverview');if(overview){overview.hidden=v!=='money';overview.setAttribute('aria-hidden',v!=='money'?'true':'false')}
+ const overview=$('dashboardOverview');if(overview){overview.hidden=v!=='home';overview.setAttribute('aria-hidden',v!=='home'?'true':'false')}
  document.body.dataset.currentPage=v;
  if(opts.history!==false){const next='#page='+v;if(location.hash!==next)history.pushState({valviPage:v},'',next)}
- if(v==='reports')drawCharts();if(v==='financial')renderFinancialPlan();if(v==='health')renderHealthCentre();
+ if(v==='reports')drawCharts();if(v==='financial')renderFinancialPlan();if(v==='health')renderHealthCentre();if(v==='salary')renderSalaryCentre();
  window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
 }
 document.querySelector('.nav').addEventListener('click',e=>{const b=e.target.closest('[data-view]');if(b)showView(b.dataset.view)});
@@ -1045,6 +1063,19 @@ function savePdfBackup(){const goals=data.goals,tx=allTx();const esc=v=>String(v
 #installAppBtn{white-space:nowrap}
 @media(max-width:760px){.install-help{position:fixed;right:12px;top:68px;z-index:1000;max-width:min(75vw,320px);padding:7px 10px;border-radius:9px;background:#fff;box-shadow:0 4px 16px #173b3020}}
 </style>
+
+<style id="cedinook-v2-simplified">
+.dashboard-tools{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 14px}.dashboard-tools .small-note{padding:8px 12px;border-radius:10px}
+#dashboardOverview .st-hero,#dashboardOverview .st-insights,#dashboardOverview .st-lower-grid{display:none!important}
+#dashboardOverview .st-overview-row{margin-top:8px}
+#dashboardOverview>.stats{display:grid!important;margin-top:16px}
+.dashboard-private #dashboardOverview .st-overview-card b,.dashboard-private #dashboardOverview .stat-value{filter:blur(8px);user-select:none}
+.dashboard-private #dashboardOverview .st-overview-card b::selection,.dashboard-private #dashboardOverview .stat-value::selection{background:transparent}
+#notificationCenterBtn{white-space:nowrap;min-width:48px}#notificationCount{display:inline-grid;place-items:center;min-width:18px;height:18px;border-radius:20px;background:#e7b94d;color:#172b24;font-size:10px;font-weight:800;padding:0 4px}
+#view-salary .stats{margin:14px 0;grid-template-columns:repeat(2,minmax(0,1fr))}#view-salary .columns{align-items:start}
+@media(max-width:720px){.dashboard-tools{align-items:flex-start;flex-wrap:wrap}#dashboardOverview>.stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}#notificationCenterBtn{padding:9px}}
+</style>
+
 </head><body><h1>CediNook — Personal Finance Backup</h1><p>Generated ${esc(new Date().toLocaleString())} · Offline savings report</p><p><b>Important:</b> This PDF is a readable archive for printing and safekeeping. To restore data inside CediNook, also keep the JSON backup.</p><h2>Savings goals</h2><table><thead><tr><th>Goal</th><th>Currency</th><th>Current saved</th><th>Target</th><th>Progress</th><th>Deadline</th></tr></thead><tbody>${goalRows||'<tr><td colspan="6">No goals saved.</td></tr>'}</tbody></table><h2>Transactions (${tx.length})</h2><table><thead><tr><th>Date</th><th>Goal</th><th>Type</th><th>Amount</th><th>Note</th></tr></thead><tbody>${txRows||'<tr><td colspan="5">No transactions recorded.</td></tr>'}</tbody></table><h2>Preferences</h2><p>Reminder frequency: ${esc(data.settings.reminderFrequency||'off')} · Reminder time: ${esc(data.settings.reminderTime||'18:00')} · PIN lock: ${data.settings.pinHash?'Enabled (PIN not included)':'Disabled'}</p><div class="notice">Privacy note: This report may contain personal financial details. Store it somewhere private.</div><p><small>CediNook does not move or hold money. Balances are based on transactions entered by the user.</small></p><script>window.onload=()=>setTimeout(()=>window.print(),250)<\/script>
 <style id="cedinook-layout-refresh">
 :root{--green:#176b52;--green2:#0f4f3d;--mint:#e8f4ed;--mint2:#f1f7f2;--ink:#172b24;--muted:#64766d;--line:#e1e9e3;--bg:#f5f8f5;--white:#fff;--red:#b44c48;--amber:#8d611c;--shadow:0 8px 28px rgba(30,56,43,.055);--surface-soft:#f7faf7}
@@ -1197,6 +1228,16 @@ $('assetForm')?.addEventListener('submit',e=>{e.preventDefault();const name=$('a
 $('healthEmergencyForm')?.addEventListener('submit',e=>{e.preventDefault();const essential=Number($('essentialCosts').value),months=Number($('healthEmergencyMonths').value),saved=Number($('emergencyCurrent').value);if(!Number.isFinite(essential)||essential<=0||!Number.isFinite(saved)||saved<0)return alert('Enter valid essential costs and savings.');data.settings.emergencyExpenses=essential;data.settings.emergencyMonths=months;data.settings.emergencySaved=saved;persist();alert('Emergency-fund plan updated.')});
 document.addEventListener('click',e=>{const remove=e.target.closest('[data-asset-delete]');if(remove){data.assets=(data.assets||[]).filter(a=>a.id!==remove.dataset.assetDelete);persist()}});
 
+function renderSalaryCentre(){
+ const entries=(data.moneyEntries||[]).filter(x=>x.type==='income'&&['Salary','Other income','Bonus / commission'].includes(x.category));
+ const mk=monthKey(today()),month=entries.filter(x=>monthKey(x.date)===mk);
+ const sum=a=>a.reduce((n,x)=>n+Number(x.amount||0),0);
+ if($('salaryMonthTotal'))$('salaryMonthTotal').textContent=money(sum(month.filter(x=>x.category==='Salary')),'GHS');
+ if($('otherIncomeTotal'))$('otherIncomeTotal').textContent=money(sum(month.filter(x=>x.category!=='Salary')),'GHS');
+ if($('salaryHistory'))$('salaryHistory').innerHTML=entries.length?entries.slice(0,40).map(x=>`<div class="reminder-row"><div><b>${safe(x.note||x.category)}</b><small>${safe(x.date)} · ${safe(x.category)}</small></div><strong class="money-positive">+${money(x.amount,'GHS')}</strong></div>`).join(''):'<div class="empty">No salary or income payments recorded yet.</div>';
+}
+$('salaryDate')&&($('salaryDate').value=today());
+$('salaryForm')?.addEventListener('submit',e=>{e.preventDefault();const amount=Number($('salaryAmount').value),date=$('salaryDate').value||today(),kind=$('salaryKind').value,source=$('salarySource').value.trim();if(!source||!Number.isFinite(amount)||amount<=0)return alert('Enter a source and a valid amount.');data.moneyEntries=data.moneyEntries||[];data.moneyEntries.unshift({id:'income_'+Date.now().toString(36),type:'income',amount,category:kind==='salary'?'Salary':kind==='bonus'?'Bonus / commission':'Other income',date,note:source+($('salaryNote').value.trim()?' · '+$('salaryNote').value.trim():''),source:'salary_centre'});$('salaryForm').reset();$('salaryDate').value=today();persist();renderSalaryCentre();});
 function renderMoney(){
  const entries=Array.isArray(data.moneyEntries)?data.moneyEntries:[],debts=Array.isArray(data.debts)?data.debts:[];
  const mk=monthKey(today()),month=entries.filter(x=>monthKey(x.date)===mk),expenses=month.filter(x=>x.type==='expense').reduce((s,x)=>s+Number(x.amount||0),0),income=month.filter(x=>x.type==='income').reduce((s,x)=>s+Number(x.amount||0),0),budget=Number(data.monthlyBudget||0),left=budget-expenses;
@@ -1226,7 +1267,7 @@ $('runDebtPlan').addEventListener('click',()=>{const debts=(data.debts||[]).filt
 
 
 
-render();renderMoney();renderBankCenter();renderFinancialPlan();renderHealthCentre();showView('money');showLock();checkReminder();setInterval(checkReminder,30000);
+render();renderMoney();renderSalaryCentre();renderBankCenter();renderFinancialPlan();renderHealthCentre();showView('home');showLock();checkReminder();setInterval(checkReminder,30000);
 })();
 </script>
 <script id="valvi-dashboard">
@@ -1312,6 +1353,13 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
     .then(() => console.info('CediNook offline app ready'))
     .catch(err => console.warn('CediNook offline setup unavailable:', err)));
 }
+
+// Dashboard privacy preference: masks values without changing saved records.
+(function dashboardPrivacy(){const key='cedinook_dashboard_amounts_hidden';let hidden=false;try{hidden=storage.getItem(key)==='1'}catch(_){}const btn=$('toggleDashboardPrivacy');function apply(){document.body.classList.toggle('dashboard-private',hidden);if(btn){btn.textContent=hidden?'◎ Show amounts':'◉ Hide amounts';btn.setAttribute('aria-pressed',String(hidden))}}btn?.addEventListener('click',()=>{hidden=!hidden;try{storage.setItem(key,hidden?'1':'0')}catch(_){}apply()});apply()})();
+// A single, easy-to-reach reminder centre; browser notifications remain opt-in.
+$('notificationCenterBtn')?.addEventListener('click',async()=>{const dueBills=(data.bills||[]).filter(b=>b.due&&b.due<=today());const dueRepeats=(data.recurringMoney||[]).filter(r=>r.nextDate&&r.nextDate<=today());const unread=dueBills.length+dueRepeats.length;let msg=`CediNook reminders\n\nBills due: ${dueBills.length}\nRecurring entries due: ${dueRepeats.length}\nSavings goals: ${data.goals.filter(g=>remaining(g)>0).length} active`;if('Notification'in window&&Notification.permission==='default'&&confirm(msg+'\n\nEnable browser notifications for reminders?')){try{await Notification.requestPermission()}catch(_){}}else alert(msg+'\n\nManage reminder frequency and time in Settings.');});
+function updateNotificationCount(){const n=(data.bills||[]).filter(b=>b.due&&b.due<=today()).length+(data.recurringMoney||[]).filter(r=>r.nextDate&&r.nextDate<=today()).length;const el=$('notificationCount');if(el)el.textContent=n>9?'9+':String(n)}
+updateNotificationCount();
 </script>
 
 
