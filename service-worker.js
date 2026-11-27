@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cedinook-v3';
+const CACHE_NAME = 'cedinook-v4';
 const APP_SHELL = [
   './',
   './index.html',

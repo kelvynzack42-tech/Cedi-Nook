@@ -318,6 +318,7 @@ body{min-width:320px}
 .wb-logo{width:43px;height:43px;object-fit:contain;border-radius:13px;background:#071949;padding:2px}
 .brand .logo{flex:0 0 42px}
 .st-brand .st-logo{flex:0 0 47px}
+.dashboard-action-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.dashboard-action-grid button{min-height:82px!important;padding:12px 9px!important;text-align:center}.dashboard-action-grid button span{line-height:1.3}.dashboard-action-grid button:focus-visible{outline:3px solid #2563eb;outline-offset:3px}@media(min-width:1100px){.dashboard-action-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 </style>
 
 <style id="valvitrack-layout-v11">
@@ -464,7 +465,7 @@ header.st-topbar{margin-left:290px;max-width:none;padding:18px 30px;background:t
 <main id="appMain">
  <div id="dashboardOverview" class="dashboard-overview-page">
  <section class="st-hero">
-  <div class="st-hero-copy"><div class="st-welcome-pill" id="welcomePill">👋 Welcome!</div><h2 id="greeting">Take Control of Your <em>Finance</em></h2><p>Save more, spend wisely, and achieve your goals.</p><button class="st-hero-btn" type="button" data-go-view="dashboard">Set a Savings Goal <span>→</span></button></div>
+  <div class="st-hero-copy"><div class="st-welcome-pill" id="welcomePill">👋 Welcome!</div><h2 id="greeting">Take Control of Your <em>Finance</em></h2><p>Save more, spend wisely, and achieve your goals.</p><button class="st-hero-btn" type="button" data-go-view="dashboard" data-focus-form="goalForm">Set a Savings Goal <span>→</span></button></div>
   <div class="st-hero-art" aria-hidden="true"></div>
  </section>
  <div class="dashboard-tools"><button type="button" class="header-btn" id="toggleDashboardPrivacy" aria-pressed="false">◉ Hide amounts</button><span class="small-note">Your private financial snapshot</span></div><div class="st-overview-row">
@@ -475,7 +476,16 @@ header.st-topbar{margin-left:290px;max-width:none;padding:18px 30px;background:t
  <section class="st-insights" id="stInsights" aria-live="polite"></section>
  <section class="st-lower-grid">
   <div class="st-chart-panel"><div class="st-panel-head"><h3>▥ &nbsp; Savings Overview</h3><div class="st-range"><button class="active" type="button">1M</button><button type="button">3M</button><button type="button">6M</button><button type="button">1Y</button></div></div><div class="st-chart-wrap"><canvas id="stSavingsChart" aria-label="Savings overview chart"></canvas></div><div class="st-chart-labels"><span>Week 1</span><span>Week 2</span><span>Week 3</span><span>Week 4</span></div></div>
-  <div class="st-quick-panel"><h3>⚡ &nbsp; Quick Actions</h3><div class="st-quick-grid"><button type="button" data-go-view="dashboard"><b>＋</b><span>Add Savings</span></button><button type="button" data-go-view="money"><b>▦</b><span>Set Budget</span></button><button type="button" data-go-view="money"><b>▤</b><span>Track Expense</span></button><button type="button" data-go-view="reports"><b>◔</b><span>View Reports</span></button></div></div>
+  <div class="st-quick-panel"><h3>⚡ &nbsp; Quick actions</h3><p class="sub">Choose an action to open the right section and its entry form.</p><div class="st-quick-grid dashboard-action-grid">
+   <button type="button" data-go-view="dashboard" data-focus-form="goalForm"><b>＋</b><span>Create savings goal</span></button>
+   <button type="button" data-go-view="money" data-focus-form="moneyForm"><b>↘</b><span>Record expense / income</span></button>
+   <button type="button" data-go-view="salary" data-focus-form="salaryForm"><b>＄</b><span>Record salary</span></button>
+   <button type="button" data-go-view="money" data-focus-form="budgetForm"><b>▦</b><span>Set monthly budget</span></button>
+   <button type="button" data-go-view="money" data-focus-form="debtForm"><b>⇄</b><span>Add debt</span></button>
+   <button type="button" data-go-view="financial" data-focus-form="billForm"><b>▣</b><span>Add a bill</span></button>
+   <button type="button" data-go-view="planner" data-focus-form="reminderForm"><b>🔔</b><span>Set reminders</span></button>
+   <button type="button" data-go-view="health" data-focus-form="assetForm"><b>◇</b><span>Add an asset</span></button>
+  </div></div>
  </section>
  <div class="welcome st-original-welcome"><div><h2>Your money, organised with purpose.</h2><p>Track spending, plan your income, stay ahead of bills, manage debts and build savings habits.</p></div><div class="small-note">🔒 Your financial records stay on this device</div></div>
  <section class="stats">
@@ -1107,6 +1117,7 @@ html body .st-overview-row .st-overview-card{background:#fff!important;border-co
 html body .st-insights .st-ins-card,html body .st-lower-grid .st-chart-panel,html body .st-lower-grid .st-quick-panel,html body .workspace-layout .panel,html body .workspace-layout .stat,html body .workspace-layout .goal-card,html body .workspace-layout .chart-panel{background:#fff!important;color:#172b24!important;border-color:#e5ece6!important;box-shadow:0 8px 28px rgba(30,56,43,.055)!important}
 html body .workspace-layout .empty,html body .workspace-layout .number,html body .workspace-layout .pace,html body .workspace-layout .reminder-row,html body .workspace-layout .category-row,html body .workspace-layout .bill-row{background:#f7faf7!important;color:#62746a!important;border-color:#e5ece6!important}html body .workspace-layout .stat{background:#fff!important;color:#172b24!important}html body header.st-topbar .brand h1{color:#173b30!important}@media(max-width:720px){html body header.st-topbar,html body #appMain{margin-left:0!important}html body #appMain .st-hero:after{background:linear-gradient(90deg,#123f35 0%,rgba(18,63,53,.94) 55%,rgba(18,63,53,.58) 100%),url('./assets/hero.svg') right center/auto 125% no-repeat!important}}
 </style>
+
 </body></html>`);w.document.close()}
 $('pdfBackupBtn').onclick=$('pdfBackupSettingsBtn').onclick=savePdfBackup;$('goalSearch').addEventListener('input',render);$('goalFilter').addEventListener('change',render);$('goalSort').addEventListener('change',render);
 function downloadBlob(blob,name){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
@@ -1285,7 +1296,31 @@ render();renderMoney();renderSalaryCentre();renderBankCenter();renderFinancialPl
   const num=Number(read('totalRemaining').replace(/[^0-9.]/g,''))||0;const vals=[num*.34,num*.62,num*.58,num];const max=Math.max(100,...vals),pad=22,base=h-12,top=12;ctx.strokeStyle='#dbe6f7';ctx.lineWidth=1;for(let i=1;i<=3;i++){const y=top+(base-top)*i/4;ctx.beginPath();ctx.moveTo(pad,y);ctx.lineTo(w-12,y);ctx.stroke()}
   const pts=vals.map((v,i)=>({x:pad+(w-pad-14)*i/3,y:base-(v/max)*(base-top)}));const grad=ctx.createLinearGradient(0,top,0,base);grad.addColorStop(0,'#2563eb55');grad.addColorStop(1,'#2563eb00');ctx.beginPath();ctx.moveTo(pts[0].x,base);pts.forEach(p=>ctx.lineTo(p.x,p.y));ctx.lineTo(pts[3].x,base);ctx.closePath();ctx.fillStyle=grad;ctx.fill();ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.strokeStyle='#2563eb';ctx.lineWidth=3.5;ctx.lineJoin='round';ctx.stroke();pts.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,4.5,0,Math.PI*2);ctx.fillStyle='#ffffff';ctx.fill();ctx.strokeStyle='#4ade80';ctx.lineWidth=2;ctx.stroke()});
  }
- document.addEventListener('click',e=>{const b=e.target.closest('[data-go-view]');if(b){const nav=document.querySelector('.st-sidebar [data-view="'+b.dataset.goView+'"]');if(nav)nav.click();}});
+ document.addEventListener('click',e=>{
+  const button=e.target instanceof Element ? e.target.closest('[data-go-view][data-focus-form]') : null;
+  if(!button)return;
+  e.preventDefault();
+  const targetView=button.dataset.goView;
+  const formId=button.dataset.focusForm;
+  // showView is the app's real page controller. The sidebar is not required.
+  if(typeof showView==='function') showView(targetView);
+  else {
+   const navButton=document.querySelector('.nav [data-view="'+targetView+'"]');
+   if(navButton) navButton.click();
+  }
+  // Wait for the target view to become active before scrolling/focusing its form.
+  window.setTimeout(()=>{
+   const form=document.getElementById(formId);
+   if(!form)return;
+   const owner=form.closest('.view');
+   if(owner && !owner.classList.contains('active'))return;
+   form.classList.add('quick-action-highlight');
+   form.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'center'});
+   const field=form.querySelector('input:not([type="hidden"]):not([disabled]),select:not([disabled]),textarea:not([disabled])');
+   if(field){field.focus({preventScroll:true});if(field.select && field.type==='text')field.select();}
+   window.setTimeout(()=>form.classList.remove('quick-action-highlight'),1800);
+  },350);
+ });
  document.addEventListener('input',e=>{if(e.target.id==='stGlobalSearch'){const q=e.target.value.trim();const target=document.querySelector('#goalSearch');if(target){target.value=q;target.dispatchEvent(new Event('input',{bubbles:true}));}}});
  document.addEventListener('DOMContentLoaded',draw);window.addEventListener('resize',()=>requestAnimationFrame(draw));setTimeout(draw,250);setTimeout(draw,1000);
  ['totalSaved','totalRemaining','activeGoals','monthSaved'].forEach(id=>{const el=$(id);if(el)new MutationObserver(draw).observe(el,{childList:true,subtree:true,characterData:true})});
@@ -1396,6 +1431,19 @@ html body #appMain .st-hero{background:linear-gradient(105deg,#123f35 0%,#195744
 html body .st-overview-row .st-overview-card{background:#fff!important;border-color:#e6ece6!important}html body .st-overview-row .st-overview-card span{color:#6d7e74!important}html body .st-overview-row .st-overview-card b{color:#173b30!important}html body .st-overview-row .st-overview-card small{color:#73877b!important}
 html body .st-insights .st-ins-card,html body .st-lower-grid .st-chart-panel,html body .st-lower-grid .st-quick-panel,html body .workspace-layout .panel,html body .workspace-layout .stat,html body .workspace-layout .goal-card,html body .workspace-layout .chart-panel{background:#fff!important;color:#172b24!important;border-color:#e5ece6!important;box-shadow:0 8px 28px rgba(30,56,43,.055)!important}
 html body .workspace-layout .empty,html body .workspace-layout .number,html body .workspace-layout .pace,html body .workspace-layout .reminder-row,html body .workspace-layout .category-row,html body .workspace-layout .bill-row{background:#f7faf7!important;color:#62746a!important;border-color:#e5ece6!important}html body .workspace-layout .stat{background:#fff!important;color:#172b24!important}html body header.st-topbar .brand h1{color:#173b30!important}@media(max-width:720px){html body header.st-topbar,html body #appMain{margin-left:0!important}html body #appMain .st-hero:after{background:linear-gradient(90deg,#123f35 0%,rgba(18,63,53,.94) 55%,rgba(18,63,53,.58) 100%),url('./assets/hero.svg') right center/auto 125% no-repeat!important}}
+</style>
+
+<style id="cedinook-dashboard-quick-actions-fix">
+/* Keep dashboard quick actions visible; only the promotional hero/insights are hidden. */
+#dashboardOverview .st-lower-grid{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:14px!important;margin:16px 0!important;}
+#dashboardOverview .st-lower-grid .st-chart-panel{display:none!important;}
+#dashboardOverview .st-lower-grid .st-quick-panel{display:block!important;width:100%!important;min-width:0!important;}
+#dashboardOverview .dashboard-action-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;}
+#dashboardOverview .dashboard-action-grid button{display:flex!important;min-height:76px!important;visibility:visible!important;opacity:1!important;cursor:pointer!important;}
+#dashboardOverview .dashboard-action-grid button:active{transform:scale(.98)!important;}
+.quick-action-highlight{outline:3px solid #3a9b68!important;outline-offset:5px!important;border-radius:14px!important;transition:outline-color .2s ease!important;}
+@media(min-width:900px){#dashboardOverview .dashboard-action-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;}}
+@media(max-width:380px){#dashboardOverview .dashboard-action-grid{grid-template-columns:1fr!important;}}
 </style>
 </body>
 </html>
